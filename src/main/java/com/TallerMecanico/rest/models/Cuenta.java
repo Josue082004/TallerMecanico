@@ -1,3 +1,6 @@
+
+package com.TallerMecanico.rest.models;
+
 public class Cuenta {
     private Integer id;
     private String email;
