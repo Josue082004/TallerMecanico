@@ -68,14 +68,14 @@ public class LinkedList <E>{
             return search;
         }
     }
-    private E getFirst() throws ListEmptyException {
+    public E getFirst() throws ListEmptyException {
         if (isEmpty()) {
             throw new ListEmptyException("Error, Lista vacía");
         }
         return header.getInfo();
     }
 
-    private E getLast() throws ListEmptyException {
+    public E getLast() throws ListEmptyException {
         if (isEmpty()) {
             throw new ListEmptyException("Error, Lista vacía");
         }
