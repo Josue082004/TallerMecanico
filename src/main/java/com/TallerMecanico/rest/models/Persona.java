@@ -4,22 +4,26 @@ public class Persona {
     private Integer id;
     private String nombre;
     private String apellido;
-    private Int telefono;
+    private String telefono;
     private String email;
-    private Integer direccion_id;
-    private int Cedula;
+    private String direccion;
+    private String tipodeIdentificacion;
+    private String numeroDeIdentificacion;
 
-public Persona(){}
-
-public Persona(Integer id, String nombre, String apellido, Int telefono, String email, Integer direccion_id, int Cedula){
-    this.id = id;
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.telefono = telefono;
-    this.email = email;
-    this.direccion_id = direccion_id;
-    this.Cedula = Cedula;
+    public Persona() {
     }
+
+    public Persona(Integer id, String nombre, String apellido, String telefono, String email, String direccion, String tipodeIdentificacion, String numeroDeIdentificacion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.telefono = telefono;
+        this.email = email;
+        this.direccion = direccion;
+        this.tipodeIdentificacion = tipodeIdentificacion;
+        this.numeroDeIdentificacion = numeroDeIdentificacion;
+    }
+
     public Integer getId() {
         return this.id;
     }
@@ -44,11 +48,11 @@ public Persona(Integer id, String nombre, String apellido, Int telefono, String 
         this.apellido = apellido;
     }
 
-    public Int getTelefono() {
+    public String getTelefono() {
         return this.telefono;
     }
 
-    public void setTelefono(Int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
@@ -60,20 +64,29 @@ public Persona(Integer id, String nombre, String apellido, Int telefono, String 
         this.email = email;
     }
 
-    public Integer getDireccion_id() {
-        return this.direccion_id;
+    public String getDireccion() {
+        return this.direccion;
     }
 
-    public void setDireccion_id(Integer direccion_id) {
-        this.direccion_id = direccion_id;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
-    public int getCedula() {
-        return this.Cedula;
+    public String getTipodeIdentificacion() {
+        return this.tipodeIdentificacion;
     }
 
-    public void setCedula(int Cedula) {
-        this.Cedula = Cedula;
+    public void setTipodeIdentificacion(String tipodeIdentificacion) {
+        this.tipodeIdentificacion = tipodeIdentificacion;
+    }
+
+    public String getNumeroDeIdentificacion() {
+        return this.numeroDeIdentificacion;
+    }
+
+    public void setNumeroDeIdentificacion(String numeroDeIdentificacion) {
+        this.numeroDeIdentificacion = numeroDeIdentificacion;
     }
 
 }
+
