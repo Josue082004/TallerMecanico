@@ -54,9 +54,7 @@ public class ClienteApi {
         vehiculo.setAnio(map.get("anio").toString());
         vehiculo.setPlaca(map.get("placa").toString());
 
-        // Proporcionar un id al crear una instancia de Cliente
-        Integer id = cs.listAll().getSize() + 1;
-        Cliente cliente = new Cliente(id, persona, vehiculo);
+        Cliente cliente = new Cliente(persona, vehiculo);
         cs.setCliente(cliente);
 
         HashMap<String, Object> res = new HashMap<>();
