@@ -1,4 +1,4 @@
-package com.TallerMecanico.rest.controller.dao;
+package com.TallerMecanico.rest.controller.dao.CuentaDao;
 
 import com.TallerMecanico.rest.controller.dao.implement.AdapterDao;
 import com.TallerMecanico.rest.controller.tda.list.LinkedList;
