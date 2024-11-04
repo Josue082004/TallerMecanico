@@ -8,7 +8,6 @@ public class Node <E> {
     //apunta al nulo
     public Node (E info){
         this.info= info;
-        this.next= null;
     }
     //apunta al siguiente
     public Node (E info, Node <E> next){

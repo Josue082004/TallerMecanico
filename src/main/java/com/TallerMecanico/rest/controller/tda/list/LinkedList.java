@@ -76,7 +76,7 @@ public class LinkedList <E>{
         return header.getInfo();
     }
 
-    private E getLast() throws ListEmptyException {
+    public E getLast() throws ListEmptyException {
         if (isEmpty()) {
             throw new ListEmptyException("Error, Lista vacía");
         }
