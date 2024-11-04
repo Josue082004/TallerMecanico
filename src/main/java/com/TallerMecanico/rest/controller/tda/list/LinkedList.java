@@ -68,6 +68,7 @@ public class LinkedList <E>{
             return search;
         }
     }
+
     private E getFirst() throws ListEmptyException {
         if (isEmpty()) {
             throw new ListEmptyException("Error, Lista vacía");
@@ -81,6 +82,7 @@ public class LinkedList <E>{
         }
         return last.getInfo();
     }
+    
     public E get(Integer index) throws ListEmptyException, IndexOutOfBoundsException {
         if (isEmpty()) {
             throw new ListEmptyException("Error, Lista vacía");
