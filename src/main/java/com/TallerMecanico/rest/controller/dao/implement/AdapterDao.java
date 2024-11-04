@@ -53,7 +53,7 @@ public class AdapterDao <T> implements InterfazDao<T> {
         //completar
     }
         //lee archivo
-    ivate String readFile() throws Exception {
+    private String readFile() throws Exception {
         Scanner in = new Scanner(new FileReader(URL+clazz.getSimpleName()+".json"));
         StringBuilder sb = new StringBuilder();
         while(in.hasNext()){
