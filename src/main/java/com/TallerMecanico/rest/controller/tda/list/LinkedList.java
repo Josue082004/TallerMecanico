@@ -1,50 +1,50 @@
 package com.TallerMecanico.rest.controller.tda.list;
 import com.TallerMecanico.rest.controller.tda.list.Exception.ListEmptyException;
-import com.TallerMecanico.rest.controller.tda.list.Node;
 
-public class LinkedList <E>{
-    private Node <E> header; //header=cabecera
-    private Node <E> last; //last= cola
-    private Integer size; //size= tamaño
 
-    //constructor que permite realizar una lista enlazada
-    public LinkedList (){
-        this.header= null;
-        this.last= null;
-        this.size= 0;
+public class LinkedList<E> {
+    private Node<E> header;
+    private Node<E> last; 
+    private Integer size; 
+
+    public LinkedList() {
+        this.header = null; 
+        this.last = null; 
+        this.size = 0; 
     }
 
-    //1er metodo -->ver si esta vacia--- isEmpty= esta vacia (lista) 
-    public boolean isEmpty(){
+    public Boolean isEmpty() {
         return (this.header == null || this.size == 0);
     }
 
-    //2do metodo --> agregar en cabeza
-    public void addHeader (E dato){
-        Node <E> help;
-        if(isEmpty()){
-            help = new Node<>(dato);
-            header = help;
-            
+    private void addHeader(E dato) {
+        Node<E> help;
+        if (isEmpty()) {
+            help = new Node<>(dato); 
+            header = help; 
+            this.size++; 
         } else {
-            Node helpHeader = this.header;
-            help = new Node<>(dato, helpHeader);
+            Node<E> healpHeader = this.header;
+            help = new Node<>(dato, healpHeader);
             this.header = help;
-            //this.size++;
         }
         this.size++;
     }
-     private void addLast(E info) {
-        Node<E> help;
-        if (isEmpty()) {
-            addHeader(info);
+
+    private void addLast(E info) {
+        Node<E> help; 
+        if (isEmpty()) { 
+            help = new Node<>(info); 
+            header = help; 
+            last = help; 
         } else {
-            help = new Node<>(info, null);
-            last.setNext(help);
-            last = help;
-            this.size++;
+            help = new Node<>(info, null); 
+            last.setNext(help); 
+            last = help; 
         }
+        this.size++; 
     }
+
     public void add(E info) {
         addLast(info);
     }
@@ -54,8 +54,6 @@ public class LinkedList <E>{
             throw new ListEmptyException("Error, List empty");
         } else if (index.intValue() < 0 || index.intValue() >= this.size) {
             throw new IndexOutOfBoundsException("Error, fuera de rango");
-        } else if (index.intValue() == 0) {
-            return header;
         } else if (index.intValue() == (this.size - 1)) {
             return last;
         } else {
@@ -71,21 +69,21 @@ public class LinkedList <E>{
 
     private E getFirst() throws ListEmptyException {
         if (isEmpty()) {
-            throw new ListEmptyException("Error, Lista vacía");
+            throw new ListEmptyException("Error, lista vacia");
         }
-        return header.getInfo();
+        return last.getInfo();
     }
 
     public E getLast() throws ListEmptyException {
         if (isEmpty()) {
-            throw new ListEmptyException("Error, Lista vacía");
+            throw new ListEmptyException("Error, Lista Vacia");
         }
         return last.getInfo();
     }
-    
+
     public E get(Integer index) throws ListEmptyException, IndexOutOfBoundsException {
         if (isEmpty()) {
-            throw new ListEmptyException("Error, Lista vacía");
+            throw new ListEmptyException("Error, list empty");
         } else if (index.intValue() < 0 || index.intValue() >= this.size.intValue()) {
             throw new IndexOutOfBoundsException("Error, fuera de rango");
         } else if (index.intValue() == 0) {
@@ -102,6 +100,7 @@ public class LinkedList <E>{
             return search.getInfo();
         }
     }
+
     public void add(E info, Integer index) throws ListEmptyException, IndexOutOfBoundsException {
         if (isEmpty() || index.intValue() == 0) {
             addHeader(info);
@@ -116,7 +115,7 @@ public class LinkedList <E>{
         }
     }
 
-    /*** END BY POSITION */
+    /*** END BYPOSITION */
     public void reset() {
         this.header = null;
         this.last = null;
@@ -125,17 +124,16 @@ public class LinkedList <E>{
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("List Data \n");
+        StringBuilder sb = new StringBuilder("List data");
         try {
             Node<E> help = header;
             while (help != null) {
-                sb.append(help.getInfo()).append(" -> ");
+                sb.append(help.getInfo()).append(" ->");
                 help = help.getNext();
             }
         } catch (Exception e) {
             sb.append(e.getMessage());
         }
-
         return sb.toString();
     }
 
@@ -143,30 +141,111 @@ public class LinkedList <E>{
         return this.size;
     }
 
+    public Node<E> getHeader() {
+        return header; 
+    }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-    //METODO PARA TRANSFORMAR LA LISTA EN ARREGLO
-    public E[]  toArray(){
-        E[] matrix= null;
-        if(!isEmpty()){
-            Class clazz= header.getInfo().getClass();
-            matrix = (E[]) java.lang.reflect.Array.newInstance(clazz, size);// (E[].. casteo de datos)
-            Node <E> aux= header;
-            for (int i=0; i<this.size; i++){
-                matrix[i]= aux.getInfo();
-                aux= aux.getNext();
+    public E[] toArray() {
+        E[] matrix = null;
+        if (!isEmpty()) {
+            Class clazz = header.getInfo().getClass();
+            matrix = (E[]) java.lang.reflect.Array.newInstance(clazz, size);
+            Node<E> aux = header;
+            for (int i = 0; i < this.size; i++) {
+                matrix[i] = aux.getInfo();
+                aux = aux.getNext();
             }
+
         }
         return matrix;
     }
 
-    
-    //METODO PARA TRANSFORMAR LA LISTA EN ARREGLO
-    public LinkedList<E> toList(E[]matrix){
-        reset(); //para resetear la lista 
-        for (int i=0; i<matrix.length; i++){
+    public LinkedList<E> toList(E[] matrix) {
+        reset();
+        for (int i = 0; i < matrix.length; i++) {
             this.add(matrix[i]);
         }
         return this;
+    }
+
+    public void update(E data, Integer post) throws Exception{
+        if (isEmpty()) {
+            throw new ListEmptyException("Error, lista vacia");
+        }else if (post < 0 || post >= size){
+            throw new IndexOutOfBoundsException("Error, fuera de rango");
+        }else if (post == 0){
+            header.setInfo(data);
+        }else if (post == (size-1)){
+            last.setInfo(data);
+        }else{
+            Node<E> search = header;
+            Integer cont = 0;
+            while (cont < post) {
+                cont++;
+                search = search.getNext();
+            }
+            search.setInfo(data);
+        }
+
+    }
+
+    public E deleteFirst() throws ListEmptyException {
+        if (isEmpty()) {
+            throw new ListEmptyException("Error, lista vacia");
+        } else {
+            E element = header.getInfo();
+            Node<E> aux = header.getNext();
+            header = aux;
+            if (size.intValue() == 1) {
+                last = null;   
+            }
+            size--;
+            return element;
+        }
+    }
+
+    public E deleteLast() throws ListEmptyException {
+        if (isEmpty()) {
+            throw new ListEmptyException("Error, lista vacia");
+        } else {
+            E element = last.getInfo();
+            Node<E> aux = getNode(size - 2);
+            if (aux == null) {
+                last = null;
+                if (size == 2) {
+                    last = header;
+                } else {
+                    header = null;
+                }
+            } else {
+                last = null;
+                last = aux;
+                last.setNext(null);
+            }
+            size--;
+            return element;
+            }
+    }
+
+
+    public E delete (Integer post) throws Exception{
+        if (isEmpty()) {
+            throw new ListEmptyException("Error, lista vacia");
+        } else if (post < 0 || post >= size) {
+            throw new IndexOutOfBoundsException("Error, esta fuera de los limites de la lista");
+        } else if (post == 0) {
+            return deleteFirst();
+        } else if (post == (size -1)) {
+            return deleteLast();
+        } else {
+            Node<E> preview = getNode(post - 1);
+            Node<E> actually = getNode(post);
+            E element = preview.getInfo();
+            Node<E> next = actually.getNext();
+            actually = null;
+            preview.setNext(next);
+            size--;
+            return element;
+        }
     }
 }

@@ -1,5 +1,5 @@
 package com.TallerMecanico.rest.controller.dao.implement;
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.BufferedReader;
@@ -37,13 +37,24 @@ public class AdapterDao <T> implements InterfazDao<T> {
     }
 
     public T get(Integer id) throws Exception {
-        LinkedList<T> listaux = getlistAll();
-        return listaux.get(id-1);
+        LinkedList<T> list = listAll();
+        if (!list.isEmpty()) {
+            T [] matriz = list.toArray();
+            return matriz[id - 1];
+            
+        }
+        return null;
     }
     
-    public AdapterDao(InterfazDao<T> dao) {
-    }
     
+
+    public void merge(T object, Integer index) throws Exception {
+        LinkedList<T> list = listAll();
+        list.update(object, index);
+        String info = g.toJson(list.toArray());
+        saveFile(info);
+    }
+
     public void persist(T object) throws Exception {
         LinkedList<T> list = getListAll();
         list.add(object);
@@ -53,29 +64,38 @@ public class AdapterDao <T> implements InterfazDao<T> {
             e.printStackTrace();
         }
     }
-
-    public void merge(T object, Integer index) throws Exception {
-        LinkedList<T> list = getListAll();
-        list.set(index, object);
-        saveFile(list.toArray());
-    }
         //lee archivo
-    public String readFile() throws Exception {
-        BufferedReader bf = new BufferedReader(new FileReader(URL + clazz.getSimpleName() + ".json"));
-        StringBuilder sb = new StringBuilder();
-        String line = "";
-        while ((line = bf.readLine()) != null) {
-            sb.append(line).append("\n");
+   private String readFile() throws Exception {
+        File file = new File(URL + clazz.getSimpleName() + ".json");
+
+        if (!file.exists()) {
+            System.out.println("El archivo no existe, creando uno nuevo: " + file.getAbsolutePath());
+            saveFile("[]");
         }
-        bf.close();
-        return sb.toString();
+
+        StringBuilder sb = new StringBuilder();
+        try (Scanner in = new Scanner(new FileReader(file))) {
+            while (in.hasNextLine()) {
+                sb.append(in.nextLine()).append("\n");
+            }
+        }
+        return sb.toString().trim();
     }
 
-    private void saveFile(T[] object) throws Exception {
-        gson = new GsonBuilder().setPrettyPrinting().create();
-        FileWriter fw = new FileWriter(URL + clazz.getSimpleName() + ".json");
-        fw.write(gson.toJson(object));
-        fw.flush();
-        fw.close();
+    private void saveFile(String data) throws Exception {
+        File file = new File(URL + clazz.getSimpleName() + ".json");
+        file.getParentFile().mkdirs();
+
+        if (!file.exists()) {
+            System.out.println("Creando el archivo JSON: " + file.getAbsolutePath());
+            file.createNewFile();
+        }
+
+        try (FileWriter f = new FileWriter(file)) {
+            f.write(data);
+            f.flush();
+        } catch (Exception e) {
+            System.out.println("Error al escribir en el archivo: " + e.getMessage());
+        }
     }
 }
